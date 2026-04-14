@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "local:docker",
+      "type": "shell",
+      "command": "docker-compose up --build",
+      "presentation": { "panel": "new" },
+      "problemMatcher": []
+    },
+    {
+      "label": "dev:api",
+      "type": "shell",
+      "command": "python manage.py runserver",
+      "presentation": { "panel": "new" },
+      "problemMatcher": []
+    },
+    {
+      "label": " LOCAL — All Services",
+      "detail": "Run all services locally",
+      "dependsOn": ["local:docker", "dev:api"],
+      "icon": {
+        "color": "terminal.ansiGreen",
+        "id": "debug-alt"
+      },
+      "dependsOrder": "parallel"
+    }
+  ],
+  "problemMatcher": [] // Without this, sometimes VS Code behaves weirdly depending on config.
+}
