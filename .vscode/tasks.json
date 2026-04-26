@@ -11,7 +11,7 @@
     {
       "label": "dev:api",
       "type": "shell",
-      "command": "python manage.py runserver",
+      "command": "venv\\Scripts\\python.exe manage.py runserver",
       "presentation": { "panel": "new" },
       "problemMatcher": []
     },
