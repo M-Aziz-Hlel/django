@@ -21,9 +21,12 @@ class Product(models.Model):
 
     image = models.ImageField(upload_to="products/", null=True, blank=True)
 
+    quantity = models.PositiveIntegerField(default=1)  
+
     category = models.ForeignKey(
         Category,
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
+        null= True,
         related_name="products"
     )
 

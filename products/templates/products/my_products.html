@@ -1,9 +1,93 @@
-<h1>My Products</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Products</title>
+  <link rel="stylesheet" href="{% static 'products/base.css' %}">
+</head>
+<body>
 
-<ul>
-  {% for product in products %}
-    <li>{{ product.name }} - {{ product.price }}</li>
-  {% empty %}
-    <li>No products yet</li>
-  {% endfor %}
-</ul>
+<div class="layout">
+
+  <aside class="sidebar">
+    <a href="{% url 'home' %}" class="sidebar-brand">
+      <span></span> Shelf
+    </a>
+    <nav class="sidebar-nav">
+      <a href="{% url 'home' %}" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        Products
+      </a>
+      <a href="{% url 'add-product' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        Add Product
+      </a>
+      <a href="{% url 'add-category' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h16M4 12h16M4 18h7"/>
+        </svg>
+        Add Category
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>My Products</h1>
+      <p>{{ products|length }} item{% if products|length != 1 %}s{% endif %} in your catalogue</p>
+    </div>
+
+    <div class="action-bar">
+      <div class="action-bar-left">
+        <a href="{% url 'add-product' %}" class="btn btn-primary">+ Add Product</a>
+        <a href="{% url 'add-category' %}" class="btn btn-ghost">Add Category</a>
+      </div>
+    </div>
+
+    <div class="product-grid">
+      {% for product in products %}
+        <div class="product-card">
+          {% if product.image %}
+            <img class="product-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+          {% else %}
+            <div class="product-img-placeholder">No Image</div>
+          {% endif %}
+
+          <div class="product-body">
+            <p class="product-name">{{ product.name }}</p>
+            <p class="product-price">${{ product.price }}</p>
+            <div class="product-meta">
+              <span class="product-category">{{ product.category.name }}</span>
+              <span class="product-qty {% if product.quantity == 0 %}product-qty-out{% endif %}">
+                {% if product.quantity == 0 %}Out of stock{% else %}{{ product.quantity }} in stock{% endif %}
+              </span>
+            </div>
+          </div>
+
+          <div class="product-actions">
+            <a href="{% url 'edit-product' product.id %}" class="btn btn-ghost btn-sm" style="flex:1;">Edit</a>
+            <form action="{% url 'delete-product' product.id %}" method="post" style="flex:1;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm" style="width:100%;">Delete</button>
+            </form>
+          </div>
+        </div>
+      {% empty %}
+        <div class="empty-state">
+          <p>No products yet — add your first one.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+
+</div>
+
+</body>
+</html>

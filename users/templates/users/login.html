@@ -1,5 +1,64 @@
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — Shelf</title>
+  <link rel="stylesheet" href="{% static 'products/base.css' %}">
+  <link rel="stylesheet" href="{% static 'products/auth.css' %}">
+</head>
+<body class="auth-body">
+
+  <div class="auth-wrapper">
+
+    <div class="auth-brand">
+      <span class="auth-brand-dot"></span> Shelf
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Sign in to your account to continue</p>
+      </div>
+
+      <form method="post" class="auth-form" novalidate>
+        {% csrf_token %}
+
+        <div class="auth-field">
+          <label for="{{ form.username.id_for_label }}" class="auth-label">Username</label>
+          {{ form.username }}
+          {% if form.username.errors %}
+            <p class="auth-error">{{ form.username.errors|join:", " }}</p>
+          {% endif %}
+        </div>
+
+        <div class="auth-field">
+          <div class="auth-label-row">
+            <label for="{{ form.password.id_for_label }}" class="auth-label">Password</label>
+          </div>
+          {{ form.password }}
+          {% if form.password.errors %}
+            <p class="auth-error">{{ form.password.errors|join:", " }}</p>
+          {% endif %}
+        </div>
+
+        {% if form.non_field_errors %}
+          <div class="auth-alert">
+            {{ form.non_field_errors|join:", " }}
+          </div>
+        {% endif %}
+
+        <button type="submit" class="auth-btn">Sign in</button>
+      </form>
+    </div>
+
+    <p class="auth-footer">
+      Don't have an account?
+      <a href="{% url 'signup' %}" class="auth-link">Create one</a>
+    </p>
+
+  </div>
+
+</body>
+</html>

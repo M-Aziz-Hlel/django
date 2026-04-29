@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete Product</title>
+  <link rel="stylesheet" href="{% static 'products/base.css' %}">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <a href="{% url 'home' %}" class="sidebar-brand">
+      <span></span> Shelf
+    </a>
+    <nav class="sidebar-nav">
+      <a href="{% url 'home' %}" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        Products
+      </a>
+      <a href="{% url 'add-product' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        Add Product
+      </a>
+      <a href="{% url 'add-category' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h16M4 12h16M4 18h7"/>
+        </svg>
+        Add Category
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div style="max-width: 460px; margin-top: 3rem;">
+
+      <div class="delete-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+        </svg>
+      </div>
+
+      <p class="delete-product-name">"{{ product.name }}"</p>
+      <p class="delete-warning">This action is permanent and cannot be undone. The product and all associated data will be removed.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="delete-actions">
+          <button type="submit" class="btn btn-danger">Yes, delete it</button>
+          <a href="{% url 'home' %}" class="btn btn-ghost">Cancel</a>
+        </div>
+      </form>
+
+    </div>
+  </main>
+
+</div>
+
+</body>
+</html>

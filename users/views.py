@@ -9,7 +9,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("my-products")
+            return redirect("home")
     else:
         form = SignupForm()
 
@@ -29,7 +29,7 @@ def login_view(request):
 
             if user:
                 login(request, user)
-                return redirect("my-products")
+                return redirect("home")
             else:
                 form.add_error(None, "Invalid credentials")
     else:
