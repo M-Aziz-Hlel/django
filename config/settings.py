@@ -76,9 +76,15 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = "my-products"
+LOGIN_URL = "login"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
-AUTH_USER_MODEL = 'users.User'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
